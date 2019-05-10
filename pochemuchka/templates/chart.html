@@ -1,0 +1,30 @@
+{% extends "_base.html" %}
+{% block content %}
+{% from "_formhelpers.html" import render_field %}
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+<div>
+	<div class="form" id="earnings-0">
+		<h1>Let's get some basic info first</h1>
+			<form method="POST" class="register-form">
+				{% for question in questions['questions'] %}
+					<div class="row question">
+						{{ question.text }}<br>
+						<div class="row answer">
+							{% for field in question.validation %}
+								{{form[field.name]}}
+							{% endfor %}
+						</div>
+					</div>
+				{% endfor %}
+				<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+				<input type="hidden" name="question_no" value="{{questions.question_no}}+1"/>
+				<button>Let's keep Gameplanning</button>
+			</form>
+	</div>
+</div>
+{% endblock %}

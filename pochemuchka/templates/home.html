@@ -1,0 +1,111 @@
+{% extends "_base.html" %}
+{% block content %}
+{% from "_formhelpers.html" import render_field %}
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+<div>
+	<div class="form" id="earnings-0">
+		<h1>Let's get some basic info first</h1>
+			<form method="POST" class="register-form">
+				<div class="row question">
+					What's your birthdate?:<br>
+					<div class="row">
+						{{ render_field(form.birthday, placeholder='DD', class='col-md-3')}}
+						{{ render_field(form.birthmonth, placeholder='MM', class='col-md-3')}}
+						{{ render_field(form.birthyear, placeholder='YYYY', class='col-md-3')}}
+					</div>
+				</div>
+					<div class="row question">What gender best describes you?<br>
+					{{ render_field(form.gender)}}</div>
+					<div  class="row question">What's your zip code?<br>
+					{{ render_field(form.zipcode)}}</div>
+					<div class="row question">What's your marital status?<br>
+					{{ render_field(form.marital_status)}}</div>
+					<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+					<button>Let's keep Gameplanning</button>
+			</form>
+		</div>
+</div>
+<!-- 	<div class="form" id="earnings-1">
+		<h1>Let's get some basic info first</h1>
+		<form method="POST" class="register-form">
+			{{ render_field(form.birthday)}}
+			{{ render_field(form.birthmonth)}}
+			{{ render_field(form.birthyear)}}
+		</form>
+		<form method="POST" class="register-form">
+			{{ render_field(form.gender)}}
+			{{ render_field(form.zipcode)}}
+			{{ render_field(form.marital_status)}}
+			<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+			<button>Let's keep Gameplanning</button>
+		</form>
+	</div> -->
+
+
+
+
+	<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+	<script type="text/javascript">
+		var ranges = {{ranges | tojson }}
+		var averages = {{averages | tojson }}
+
+
+Highcharts.chart('container', {
+
+		title: {
+				text: 'Salary Forecast'
+		},
+
+		xAxis: {
+				type: 'datetime'
+		},
+
+		yAxis: {
+				title: {
+						text: null
+				}
+		},
+
+		tooltip: {
+				crosshairs: true,
+				shared: true,
+				valuePrefix: '€€'
+		},
+
+		legend: {
+		},
+
+		series: [{
+				name: 'Euros',
+				data: averages,
+				zIndex: 1,
+				marker: {
+						fillColor: 'white',
+						lineWidth: 2,
+						lineColor: Highcharts.getOptions().colors[0]
+				}
+		}, {
+				name: 'Range',
+				data: ranges,
+				type: 'arearange',
+				lineWidth: 0,
+				linkedTo: ':previous',
+				color: Highcharts.getOptions().colors[0],
+				fillOpacity: 0.3,
+				zIndex: 0,
+				marker: {
+						enabled: false
+				}
+		}]
+});
+
+
+	</script>
+
+</div>
+{% endblock %}
