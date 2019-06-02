@@ -2,7 +2,7 @@ import json
 import os
 
 
-environment = 'gameplan'
+environment = 'gameplan_app'
 
 class BaseConfig(object):
     cred_file_path = os.environ['CRED_FILE_LOCATION']
