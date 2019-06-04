@@ -4,6 +4,7 @@ from datetime import datetime
 import json
 import os
 import sqlalchemy
+import pandas as pd
 from sqlalchemy import MetaData, Table, Column, insert, create_engine
 
 class DBConn(object):
